@@ -2,24 +2,46 @@ import { useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
-import { auth } from "../../../config"
+import { auth, db } from "../../../config"
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import Swal from "sweetalert2"
+import { Link } from "react-router-dom"
 
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
-
   const [userData, setUserData] = useState({
     fullName: "",
     email: "",
     password: ""
   })
 
-
   const submitForm = () => {
+    Swal.fire({
+      title: "Creating your account...",
+      text: "Please wait a moment",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     createUserWithEmailAndPassword(auth, userData.email, userData.password)
       .then((userCredential) => {
         // Signed up 
         const user = userCredential.user;
-        console.log("User Auth me Save Hogia he" , user)
+        console.log("User Auth me Save Hogia he", user)
+        addUserToDb(user.uid).then(() => {
+          setUserData({
+            fullName: "",
+            email: "",
+            password: ""
+          })
+          Swal.fire({
+            icon: "success",
+            title: "Account created successfully!",
+            text: "Welcome aboard 🎉",
+            confirmButtonColor: "#3085d6",
+          });
+        })
         // ...
       })
       .catch((error) => {
@@ -27,6 +49,15 @@ function SignUp() {
         const errorMessage = error.message;
         // ..
       });
+  }
+
+
+  const addUserToDb = async (id) => {
+    await setDoc(doc(db, "users", id), {
+      name: userData.fullName,
+      email: userData.email,
+      id: id
+    })
   }
 
 
@@ -72,8 +103,8 @@ function SignUp() {
                     aria-describedby=":r0:-form-item-description"
                     aria-invalid="false"
                     className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
-                    defaultValue=""
                     fdprocessedid="2kzrnq"
+                    value={userData.fullName}
                     onChange={(event) => setUserData({ ...userData, fullName: event.target.value })}
                   />
                 </div>
@@ -109,8 +140,8 @@ function SignUp() {
                     aria-describedby=":r0:-form-item-description"
                     aria-invalid="false"
                     className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
-                    defaultValue=""
                     fdprocessedid="2kzrnq"
+                    value={userData.email}
                     onChange={(event) => setUserData({ ...userData, email: event.target.value })}
                   />
                 </div>
@@ -151,8 +182,8 @@ function SignUp() {
                         name="password"
                         placeholder="••••••••"
                         className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px] pr-10"
-                        defaultValue=""
                         fdprocessedid="aj4lkj"
+                        value={userData.password}
                         onChange={(event) => setUserData({ ...userData, password: event.target.value })}
                       />
                       <button
@@ -192,8 +223,8 @@ function SignUp() {
             <div className="w-full">
               <button
                 data-size="large"
-                type="submit"
                 form="sign-in-form"
+                type="button"
                 data-sentry-element="Button"
                 data-sentry-source-file="SignInForm.tsx"
                 className="relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-400 dark:bg-brand-500 hover:bg-brand/80 dark:hover:bg-brand/50 text-foreground border-brand-500/75 dark:border-brand/30 hover:border-brand-600 dark:hover:border-brand focus-visible:outline-brand-600 data-[state=open]:bg-brand-400/80 dark:data-[state=open]:bg-brand-500/80 data-[state=open]:outline-brand-600 w-full flex items-center justify-center text-base px-4 py-2 h-[42px]"
@@ -209,13 +240,10 @@ function SignUp() {
       </div>
       <div className="self-center my-8 text-sm">
         <div>
-          <span className="text-foreground-light">Don't have an account?</span>{" "}
-          <a
-            className="underline transition text-foreground hover:text-foreground-light"
-            href=""
-          >
-            Sign Up Now
-          </a>
+          <span className="text-foreground-light">Already have an account?</span>{" "}
+          <Link to="/login">
+            Login
+          </Link>
         </div>
       </div>
     </div>

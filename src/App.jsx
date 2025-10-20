@@ -1,10 +1,11 @@
+import { Route, Routes , } from "react-router-dom"
 import SignUp from "./components/signUp"
-
 function App() {
   return (
-    <>
-      <SignUp />
-    </>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
   )
 }
 
