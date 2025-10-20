@@ -3,7 +3,7 @@ import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { auth, db } from "../../../config"
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2"
 import { Link } from "react-router-dom"
 
@@ -242,7 +242,9 @@ function SignUp() {
         <div>
           <span className="text-foreground-light">Already have an account?</span>{" "}
           <Link to="/login">
+          <u>
             Login
+          </u>
           </Link>
         </div>
       </div>
