@@ -1,6 +1,8 @@
 import { useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
 
@@ -9,6 +11,21 @@ function SignUp() {
     email: "",
     password: ""
   })
+
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, userData.email, userData.password)
+    .then((userCredential) => {
+      // Signed up 
+      const user = userCredential.user;
+      console.log("User Auth me Save Hogia he" , user)
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+
 
   console.log(userData)
 
@@ -54,7 +71,7 @@ function SignUp() {
                     className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
                     defaultValue=""
                     fdprocessedid="2kzrnq"
-                    onChange={(event) => setUserData({...userData , fullName: event.target.value})}
+                    onChange={(event) => setUserData({ ...userData, fullName: event.target.value })}
                   />
                 </div>
 
@@ -91,7 +108,7 @@ function SignUp() {
                     className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
                     defaultValue=""
                     fdprocessedid="2kzrnq"
-                    onChange={(event) => setUserData({...userData , email: event.target.value})}
+                    onChange={(event) => setUserData({ ...userData, email: event.target.value })}
                   />
                 </div>
                 <div className="mt-2" style={{ opacity: 1, transform: "none" }} />
@@ -133,7 +150,7 @@ function SignUp() {
                         className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px] pr-10"
                         defaultValue=""
                         fdprocessedid="aj4lkj"
-                        onChange={(event) => setUserData({...userData , password: event.target.value})}
+                        onChange={(event) => setUserData({ ...userData, password: event.target.value })}
                       />
                       <button
                         data-size="tiny"
