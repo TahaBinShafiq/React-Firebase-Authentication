@@ -2,6 +2,7 @@ import { useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
+import { auth } from "../../../config"
 
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
@@ -12,19 +13,21 @@ function SignUp() {
     password: ""
   })
 
-  const auth = getAuth();
-  createUserWithEmailAndPassword(auth, userData.email, userData.password)
-    .then((userCredential) => {
-      // Signed up 
-      const user = userCredential.user;
-      console.log("User Auth me Save Hogia he" , user)
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+
+  const submitForm = () => {
+    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        console.log("User Auth me Save Hogia he" , user)
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  }
 
 
   console.log(userData)
@@ -38,7 +41,7 @@ function SignUp() {
     <div className="flex-1 flex flex-col justify-center w-[330px] sm:w-[384px] mx-auto">
       <div className="mb-10">
         <h1 className="mt-8 mb-2 lg:text-3xl">Welcome back</h1>
-        <h2 className="text-sm text-foreground-light">Sign in to your account</h2>
+        <h2 className="text-sm text-foreground-light">Sign up to your account</h2>
       </div>
       <div className="flex flex-col gap-5">
         <form id="sign-in-form" className="flex flex-col gap-4">
@@ -195,6 +198,7 @@ function SignUp() {
                 data-sentry-source-file="SignInForm.tsx"
                 className="relative cursor-pointer space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border bg-brand-400 dark:bg-brand-500 hover:bg-brand/80 dark:hover:bg-brand/50 text-foreground border-brand-500/75 dark:border-brand/30 hover:border-brand-600 dark:hover:border-brand focus-visible:outline-brand-600 data-[state=open]:bg-brand-400/80 dark:data-[state=open]:bg-brand-500/80 data-[state=open]:outline-brand-600 w-full flex items-center justify-center text-base px-4 py-2 h-[42px]"
                 fdprocessedid="z4m6j"
+                onClick={submitForm}
               >
                 {" "}
                 <span className="truncate">Sign Up</span>{" "}
