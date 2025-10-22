@@ -7,9 +7,6 @@ import { setDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2"
 import { Link } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
-import App from "../../App"
-import { AppContext } from "../Provider"
-
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
   const [userData, setUserData] = useState({
@@ -19,6 +16,7 @@ function SignUp() {
   })
 
   const submitForm = () => {
+    if (!validate()) return;
     Swal.fire({
       title: "Creating your account...",
       text: "Please wait a moment",
@@ -70,10 +68,20 @@ function SignUp() {
     setShowPass(!showPass)
   }
 
+  const [errors, setErrors] = useState({});
+  const validate = () => {
+    let newErrors = {};
+    if (!userData.fullName.trim()) newErrors.fullName = "Please fill this field";
+    if (!userData.email.trim()) newErrors.email = "Please fill this field";
+    if (!userData.password.trim()) newErrors.password = "Please fill this field";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   return (
     <>
       <div className="flex justify-end pt-5 pr-5">
-        <ThemeBtn/>
+        <ThemeBtn />
       </div>
       <div className="flex-1 flex flex-col justify-center w-[330px] sm:w-[384px] mx-auto">
         <div className="mb-10">
@@ -108,8 +116,11 @@ function SignUp() {
                       placeholder="Full Name"
                       aria-describedby=":r0:-form-item-description"
                       aria-invalid="false"
-                      className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
-                      fdprocessedid="2kzrnq"
+                      className={`w-full px-3 py-2 rounded-md border ${errors.fullName
+                        ? "border-red-500 focus:ring-red-400"
+                        : "border-vlack focus:ring-black"
+                        } focus:ring-2 outline-none focus:ring-offset-2`}
+
                       value={userData.fullName}
                       onChange={(event) => setUserData({ ...userData, fullName: event.target.value })}
                     />
@@ -145,7 +156,10 @@ function SignUp() {
                       placeholder="you@example.com"
                       aria-describedby=":r0:-form-item-description"
                       aria-invalid="false"
-                      className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px]"
+                      className={`w-full px-3 py-2 rounded-md border ${errors.email
+                        ? "border-red-500 focus:ring-red-400"
+                        : "border-vlack focus:ring-black"
+                        } focus:ring-2 outline-none focus:ring-offset-2`}
                       fdprocessedid="2kzrnq"
                       value={userData.email}
                       onChange={(event) => setUserData({ ...userData, email: event.target.value })}
@@ -187,8 +201,11 @@ function SignUp() {
                           autoComplete="current-password"
                           name="password"
                           placeholder="••••••••"
-                          className="flex w-full rounded-md border border-control read-only:border-button bg-foreground/[.026] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-muted read-only:text-foreground-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background-control focus-visible:ring-offset-2 focus-visible:ring-offset-foreground-muted disabled:cursor-not-allowed disabled:text-foreground-muted aria-[] aria-[invalid=true]:bg-destructive-200 aria-[invalid=true]:border-destructive-400 aria-[invalid=true]:focus:border-destructive aria-[invalid=true]:focus-visible:border-destructive text-sm leading-4 px-3 py-2 h-[34px] pr-10"
                           fdprocessedid="aj4lkj"
+                          className={`w-full px-3 py-2 rounded-md border ${errors.fullName
+                            ? "border-red-500 focus:ring-red-400"
+                            : "border-vlack focus:ring-black"
+                            } focus:ring-2 outline-none focus:ring-offset-2`}
                           value={userData.password}
                           onChange={(event) => setUserData({ ...userData, password: event.target.value })}
                         />
