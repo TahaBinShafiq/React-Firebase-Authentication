@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+:root {
+  --placeholder-color: #9ca3af; /* gray-400 */
+}
+
+.dark {
+  --placeholder-color: #d1d5db; /* gray-300 for dark mode */
+}
+
+input::placeholder {
+  color: var(--placeholder-color);
+  transition: color 0.3s ease;
+}
