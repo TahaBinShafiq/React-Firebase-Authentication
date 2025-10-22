@@ -71,8 +71,6 @@ function SignUp() {
   }
 
   const { theme, handleTheme } = useContext(AppContext)
-
-  console.log(useContext(AppContext));
   return (
     <>
       <div className="flex justify-end pt-5 pr-5">
