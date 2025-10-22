@@ -3,8 +3,8 @@ import SignUp from "./components/signUp"
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/React-Firebase-Authentication/" element={<Login />} />
+      <Route path="/React-Firebase-Authentication/signup" element={<SignUp />} />
     </Routes>
   )
 }
