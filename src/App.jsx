@@ -1,11 +1,10 @@
-import { Route, Routes , } from "react-router-dom"
-import SignUp from "./components/signUp"
+import { AppProvider } from "./components/Provider"
+import AppRoutes from "./components/routes"
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-    </Routes>
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
   )
 }
 

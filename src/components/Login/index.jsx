@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
 import { Link } from "react-router-dom"
+import ThemeBtn from "../ThemeButton"
+import { AppContext } from "../Provider"
 
 function Login() {
     const [showPass, setShowPass] = useState(false)
@@ -9,7 +11,13 @@ function Login() {
         setShowPass(!showPass)
     }
 
-    return (
+    const {theme , handleTheme} = useContext(AppContext)
+        return (
+
+        <>
+        <div className="flex justify-end pt-5 pr-5">
+            <ThemeBtn onClick={handleTheme} text={theme}/>
+        </div>
         <div className="flex-1 flex flex-col justify-center w-[330px] sm:w-[384px] mx-auto">
             <div className="mb-10">
                 <h1 className="mt-8 mb-2 lg:text-3xl">Login your Account</h1>
@@ -148,6 +156,7 @@ function Login() {
                 </div>
             </div>
         </div>
+        </>
 
     )
 }
