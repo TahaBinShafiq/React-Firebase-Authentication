@@ -70,11 +70,10 @@ function SignUp() {
     setShowPass(!showPass)
   }
 
-  const { theme, handleTheme } = useContext(AppContext)
   return (
     <>
       <div className="flex justify-end pt-5 pr-5">
-        <ThemeBtn onClick={handleTheme} text={theme}/>
+        <ThemeBtn/>
       </div>
       <div className="flex-1 flex flex-col justify-center w-[330px] sm:w-[384px] mx-auto">
         <div className="mb-10">
