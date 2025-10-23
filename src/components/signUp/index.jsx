@@ -7,6 +7,15 @@ import { setDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2"
 import { NavLink } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
+import withReactContent from 'sweetalert2-react-content'
+
+
+
+
+const MySwal = withReactContent(Swal)
+
+
+
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
   const [userData, setUserData] = useState({
@@ -17,12 +26,12 @@ function SignUp() {
 
   const submitForm = () => {
     if (!validate()) return;
-    Swal.fire({
+    MySwal.fire({
       title: "Creating your account...",
       text: "Please wait a moment",
       allowOutsideClick: false,
       didOpen: () => {
-        Swal.showLoading();
+        MySwal.showLoading();
       },
     });
     createUserWithEmailAndPassword(auth, userData.email, userData.password)
@@ -36,7 +45,7 @@ function SignUp() {
             email: "",
             password: ""
           })
-          Swal.fire({
+          MySwal.fire({
             icon: "success",
             title: "Account created successfully!",
             text: "Welcome aboard 🎉",
@@ -94,38 +103,32 @@ function SignUp() {
               <div name="email" className="relative text-sm flex flex-col gap-2">
                 <div
                   className="transition-all duration-500 ease-in-out flex flex-row gap-2 justify-between"
-                  data-formlayout-id="labelContainer"
+
                 >
                   <label
                     className="text-sm text peer-disabled:cursor-not-allowed peer-disabled:opacity-70 transition-colors text-foreground flex gap-2 items-center break-all leading-normal"
                     htmlFor="name"
-                    data-formlayout-id="formLabel"
                   >
                     <span>Full Name</span>
                   </label>
                 </div>
                 <div
                   className="transition-all duration-500 ease-in-out order-1 col-span-12"
-                  data-formlayout-id="dataContainer"
                 >
-                  <div className="" data-formlayout-id="nonBoxInputContainer">
+                  <div >
                     <input
                       type="text"
                       id="name"
                       name="name"
                       placeholder="Full Name"
-                      aria-describedby=":r0:-form-item-description"
-                      aria-invalid="false"
                       className={`w-full px-3 py-2 rounded-md border ${errors.fullName
                         ? "border-red-500 focus:ring-red-400"
                         : "border-vlack focus:ring-black"
                         } focus:ring-2 outline-none focus:ring-offset-2`}
-
                       value={userData.fullName}
                       onChange={(event) => setUserData({ ...userData, fullName: event.target.value })}
                     />
                   </div>
-
 
                   <div className="mt-2" style={{ opacity: 1, transform: "none" }} />
                 </div>
@@ -133,34 +136,31 @@ function SignUp() {
               <div name="email" className="relative text-sm flex flex-col gap-2">
                 <div
                   className="transition-all duration-500 ease-in-out flex flex-row gap-2 justify-between"
-                  data-formlayout-id="labelContainer"
+
                 >
                   <label
                     className="text-sm text peer-disabled:cursor-not-allowed peer-disabled:opacity-70 transition-colors text-foreground flex gap-2 items-center break-all leading-normal"
                     htmlFor="email"
-                    data-formlayout-id="formLabel"
+
                   >
                     <span>Email</span>
                   </label>
                 </div>
                 <div
                   className="transition-all duration-500 ease-in-out order-1 col-span-12"
-                  data-formlayout-id="dataContainer"
+
                 >
-                  <div className="" data-formlayout-id="nonBoxInputContainer">
+                  <div >
                     <input
                       type="email"
                       id="email"
                       autoComplete="email"
                       name="email"
                       placeholder="you@example.com"
-                      aria-describedby=":r0:-form-item-description"
-                      aria-invalid="false"
                       className={`w-full px-3 py-2 rounded-md border ${errors.email
                         ? "border-red-500 focus:ring-red-400"
                         : "border-vlack focus:ring-black"
                         } focus:ring-2 outline-none focus:ring-offset-2`}
-                      fdprocessedid="2kzrnq"
                       value={userData.email}
                       onChange={(event) => setUserData({ ...userData, email: event.target.value })}
                     />
@@ -174,26 +174,23 @@ function SignUp() {
                 <div name="password" className="relative text-sm flex flex-col gap-2">
                   <div
                     className="transition-all duration-500 ease-in-out flex flex-row gap-2 justify-between"
-                    data-formlayout-id="labelContainer"
                   >
                     <label
                       className="text-sm text peer-disabled:cursor-not-allowed peer-disabled:opacity-70 transition-colors text-foreground flex gap-2 items-center break-all leading-normal"
                       htmlFor="password"
-                      data-formlayout-id="formLabel"
+
                     >
                       <span>Password</span>
                     </label>
                   </div>
                   <div
                     className="transition-all duration-500 ease-in-out order-1 col-span-12"
-                    data-formlayout-id="dataContainer"
+
                   >
-                    <div className="" data-formlayout-id="nonBoxInputContainer">
+                    <div className="" >
                       <div
                         className="relative"
-                        id=":r1:-form-item"
-                        aria-describedby=":r1:-form-item-description"
-                        aria-invalid="false"
+
                       >
                         <input
                           type={showPass ? "text" : "password"}
@@ -201,7 +198,6 @@ function SignUp() {
                           autoComplete="current-password"
                           name="password"
                           placeholder="••••••••"
-                          fdprocessedid="aj4lkj"
                           className={`w-full px-3 py-2 rounded-md border ${errors.fullName
                             ? "border-red-500 focus:ring-red-400"
                             : "border-vlack focus:ring-black"
@@ -210,12 +206,10 @@ function SignUp() {
                           onChange={(event) => setUserData({ ...userData, password: event.target.value })}
                         />
                         <button
-                          data-size="tiny"
+
                           type="button"
                           title="Show password"
-                          aria-label="Show password"
                           className="justify-center cursor-pointer inline-flex items-center space-x-2 text-center font-regular ease-out duration-200 rounded-md outline-none transition-all outline-0 focus-visible:outline-4 focus-visible:outline-offset-1 border text-foreground bg-alternative dark:bg-muted hover:bg-selection border-strong hover:border-stronger focus-visible:outline-brand-600 data-[state=open]:bg-selection data-[state=open]:outline-brand-600 data-[state=open]:border-button-hover text-xs py-1 h-[26px] absolute right-1 top-1 px-1.5"
-                          fdprocessedid="ghq7ts"
                           onClick={handlePass}
                         >
                           <div className="[&_svg]:h-[14px] [&_svg]:w-[14px] text-foreground-lighter">
