@@ -8,8 +8,8 @@ import { AppContext } from "../Provider";
 function AppRoutes(){
     return(
         <Routes >
-            <Route path="/" element={<SignUp />}/>
-            <Route path="/login" element={<Login />}/>
+            <Route index element={<SignUp />}/>
+            <Route path="login" element={<Login />}/>
         </Routes>
     )
 }
