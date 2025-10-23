@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { auth, db } from "../../../config"
 import { setDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
@@ -264,11 +264,11 @@ function SignUp() {
         <div className="self-center my-8 text-sm">
           <div>
             <span className="text-foreground-light">Already have an account?</span>{" "}
-            <Link to="/login">
+            <NavLink to="/login">
               <u>
                 Login
               </u>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
