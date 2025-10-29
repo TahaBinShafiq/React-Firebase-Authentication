@@ -1,7 +1,7 @@
 import { use, useContext, useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
 import { AppContext } from "../Provider"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
@@ -12,7 +12,7 @@ function Login() {
         password: ""
     })
 
-
+    const navigate = useNavigate()
     function userSignIn() {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, loginData.email, loginData.password)
@@ -20,7 +20,7 @@ function Login() {
                 // Signed in 
                 const user = userCredential.user;
                 console.log("User Sign in ho chuka he ===>", user)
-                alert("User Login Hogia he")
+                navigate("/dashboard")
                 // ...
             })
             .catch((error) => {
@@ -43,7 +43,6 @@ function Login() {
 
     const { theme, handleTheme } = useContext(AppContext)
     return (
-
         <>
             <div className="flex justify-end pt-5 pr-5">
                 <ThemeBtn onClick={handleTheme} text={theme} />
