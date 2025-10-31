@@ -4,13 +4,19 @@ import Login from "../Login";
 import HeroSec from "../MainPage/HeroSection";
 import ProtectedRoute from "../../Provider/protectedRoute";
 import PublicRoute from "../../Provider/PublicRoute";
+import DashboardLayout from "../views/Layout";
+import Settings from "../settings";
 
 function AppRoutes() {
     return (
         <Routes >
             <Route path="/" element={<PublicRoute><SignUp /></PublicRoute>} />
-            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/dashboard" element={<HeroSec />} />
+            <Route path="login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route element={<DashboardLayout />}>
+                <Route path="dashboard" element={<ProtectedRoute><HeroSec /></ProtectedRoute>} />
+                <Route path="settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+
+            </Route >
         </Routes>
     )
 }

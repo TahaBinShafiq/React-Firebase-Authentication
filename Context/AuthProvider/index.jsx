@@ -13,13 +13,12 @@ function AuthProvider({ children }) {
             if (user) {
                 const uid = user.uid;
                 setFirebaseUser(user)
-                setLoading(false)
                 console.log("This user is currently login", user)
                 // ...
             } else {
-                // User is signed out
-                // ...
+                setFirebaseUser(null)
             }
+            setLoading(false)
         });
         return unSubscribe
     }, [])
