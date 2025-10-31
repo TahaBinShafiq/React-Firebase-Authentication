@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth"
 import { auth, db } from "../../../config"
 import { setDoc, doc } from "firebase/firestore";
 import Swal from "sweetalert2"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
 import withReactContent from 'sweetalert2-react-content'
 
@@ -21,6 +21,8 @@ function SignUp() {
     email: "",
     password: ""
   })
+
+  const navigate = useNavigate()
 
   const submitForm = () => {
     if (!validate()) return;
@@ -48,7 +50,9 @@ function SignUp() {
             title: "Account created successfully!",
             text: "Welcome aboard 🎉",
             confirmButtonColor: "#3085d6",
-          });
+          }).then(() =>{
+            navigate('/dashboard')
+          })
         })
         // ...
       })

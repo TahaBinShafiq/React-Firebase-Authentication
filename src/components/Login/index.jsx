@@ -4,7 +4,7 @@ import ShowPass from "../../assets/showPass"
 import { Link, useNavigate } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { AppContext } from "../../../Provider/ThemeProvider"
+import { AppContext } from "../../../Context/ThemeProvider"
 
 function Login() {
     const [loginData, setLoginData] = useState({
