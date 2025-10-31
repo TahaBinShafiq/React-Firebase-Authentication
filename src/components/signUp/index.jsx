@@ -14,8 +14,6 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-
-
 function SignUp() {
   const [showPass, setShowPass] = useState(false)
   const [userData, setUserData] = useState({

@@ -7,8 +7,8 @@ function AppRoutes(){
     return(
         <Routes >
             <Route index element={<SignUp />}/>
-            <Route path="/login" element={<Login />}/>
-            <Route path="/dashboard" element={<HeroSec />}/>
+            <Route path="login" element={<Login />}/>
+            <Route path="dashboard" element={<HeroSec />}/>
         </Routes>
     )
 }

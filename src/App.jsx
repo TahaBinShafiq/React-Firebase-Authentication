@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AppContext, AppProvider } from "./components/Provider"
 import AppRoutes from "./components/routes"
+import { AppContext } from "../Provider/ThemeProvider";
 function App() {
   const { theme, setTheme } = useContext(AppContext);
   return (

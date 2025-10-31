@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import { AppContext } from "../Provider"
 import MoonSvg from "../../assets/MoonSvg"
 import SunSvg from "../../assets/SunSvg"
+import { AppContext } from "../../../Provider/ThemeProvider"
 
 function ThemeBtn() {
 

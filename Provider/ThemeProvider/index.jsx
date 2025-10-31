@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const AppContext = createContext();
 
-export function AppProvider({ children }) {
+export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light"
   });
@@ -23,4 +23,4 @@ export function AppProvider({ children }) {
   );
 }
 
-export default {AppProvider}
+export default {ThemeProvider}

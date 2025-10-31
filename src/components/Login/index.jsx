@@ -1,10 +1,10 @@
 import { use, useContext, useState } from "react"
 import HidePass from "../../assets/hidePassword"
 import ShowPass from "../../assets/showPass"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ThemeBtn from "../ThemeButton"
-import { AppContext } from "../Provider"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { AppContext } from "../../../Provider/ThemeProvider"
 
 function Login() {
     const [loginData, setLoginData] = useState({
