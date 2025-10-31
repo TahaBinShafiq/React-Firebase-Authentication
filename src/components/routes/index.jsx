@@ -6,6 +6,8 @@ import ProtectedRoute from "../../Provider/protectedRoute";
 import PublicRoute from "../../Provider/PublicRoute";
 import DashboardLayout from "../views/Layout";
 import Settings from "../settings";
+import Analytics from "../analytics";
+import ThemePage from "../ThemePage/theme";
 
 function AppRoutes() {
     return (
@@ -15,7 +17,8 @@ function AppRoutes() {
             <Route element={<DashboardLayout />}>
                 <Route path="dashboard" element={<ProtectedRoute><HeroSec /></ProtectedRoute>} />
                 <Route path="settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-
+                <Route path="analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+                <Route path="theme" element={<ProtectedRoute><ThemePage/></ProtectedRoute>} />
             </Route >
         </Routes>
     )
